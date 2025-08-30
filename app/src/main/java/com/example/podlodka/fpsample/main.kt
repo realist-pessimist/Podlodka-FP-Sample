@@ -8,9 +8,9 @@ import com.example.podlodka.fpsample.immutablestate.mutable.mutableExample
 suspend fun main() {
   //region Принцип иммутабельности
   //mutableExample()
+  //mutableConcurrencyExample()
   //immutableExample()
   //immutableConcurrencyExample()
-  //mutableConcurrencyExample()
   //endregion
   //region Принцип чистых функций
   //endregion
