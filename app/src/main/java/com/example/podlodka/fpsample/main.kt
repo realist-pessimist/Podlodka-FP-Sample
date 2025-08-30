@@ -1,5 +1,7 @@
 package com.example.podlodka.fpsample
 
+import com.example.podlodka.fpsample.errorhandling.trycatch.explicitErrorHandlingExample
+import com.example.podlodka.fpsample.errorhandling.trycatch.implicitErrorHandlingExample
 import com.example.podlodka.fpsample.immutablestate.immutable.immutableConcurrencyExample
 import com.example.podlodka.fpsample.immutablestate.immutable.immutableExample
 import com.example.podlodka.fpsample.immutablestate.mutable.mutableConcurrencyExample
@@ -15,5 +17,7 @@ suspend fun main() {
   //region Принцип чистых функций
   //endregion
   //region Явной обработки ошибок
+  //implicitErrorHandlingExample()
+  //explicitErrorHandlingExample()
   //endregion
 }
