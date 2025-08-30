@@ -12,7 +12,7 @@ enum class Customer {
 }
 
 class MutableOrder(
-  val customer: Customer,
+  var customer: Customer,
   val items: MutableList<MutableOrderItem>,
   var promoCode: String? = null,
   var discountAmount: Double = 0.0,
@@ -37,7 +37,7 @@ class MutableOrder(
   }
 }
 
-object InventoryService {
+private object InventoryService {
   private val stock = mapOf("Яблоко" to 10, "Банан" to 0, "Кокос" to 5)
 
   fun validateStock(order: MutableOrder) {
@@ -54,7 +54,7 @@ object InventoryService {
   }
 }
 
-object DiscountService {
+private object DiscountService {
   fun applyDiscounts(order: MutableOrder) {
     println("--- Применение скидок ---")
     var totalDiscount = 0.0
@@ -69,7 +69,7 @@ object DiscountService {
   }
 }
 
-object ShippingService {
+private object ShippingService {
   fun calculateShipping(order: MutableOrder) {
     println("--- Расчет доставки ---")
     val amountAfterDiscount = order.subTotal - order.discountAmount
@@ -77,7 +77,7 @@ object ShippingService {
   }
 }
 
-fun correctMutableExample() {
+fun mutableExample() {
   val order = MutableOrder(
     customer = Customer.VIP,
     items = mutableListOf(

@@ -67,7 +67,7 @@ object OrderProcessor {
   }
 }
 
-fun correctImmutableExample() {
+fun immutableExample() {
   // 1. Создаем первоначальное, неизменяемое состояние
   val initialOrderState = OrderState(
     customer = Customer.VIP,
