@@ -11,8 +11,9 @@ suspend fun immutableConcurrencyExample() = coroutineScope {
     customer = Customer.BASIC,
     items = listOf(
       OrderItem("Яблоко", 20.0, 2),
-      OrderItem("Кокос", 15.0, 1)
-    )
+      OrderItem("Кокос", 50.0, 1),
+      OrderItem("Банан", 15.0, 1)
+    ),
   )
   println("\nЗапускаем ДВЕ параллельные задачи. Каждая работает со своей КОПИЕЙ данных.")
   val job1 = launch {

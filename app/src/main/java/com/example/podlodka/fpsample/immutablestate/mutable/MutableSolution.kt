@@ -81,9 +81,9 @@ fun mutableExample() {
   val order = MutableOrder(
     customer = Customer.VIP,
     items = mutableListOf(
-      MutableOrderItem("Яблоко", 20.0, 2), // 40
-      MutableOrderItem("Банан", 50.0, 1), // 50 (нет в наличии)
-      MutableOrderItem("Кокос", 15.0, 1)  // 15
+      MutableOrderItem("Яблоко", 20.0, 2),
+      MutableOrderItem("Банан", 50.0, 1),
+      MutableOrderItem("Кокос", 15.0, 1)
     ),
     promoCode = "SALE10"
   )

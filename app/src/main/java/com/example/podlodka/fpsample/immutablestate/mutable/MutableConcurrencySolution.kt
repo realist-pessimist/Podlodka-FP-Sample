@@ -52,8 +52,9 @@ suspend fun mutableConcurrencyExample() = coroutineScope {
   val sharedOrder = MutableOrder(
     customer = Customer.BASIC, // Начнем с BASIC
     items = mutableListOf(
-      MutableOrderItem("Яблоко", 20.0, 2), // 40
-      MutableOrderItem("Кокос", 15.0, 1)  // 15
+      MutableOrderItem("Яблоко", 20.0, 2),
+      MutableOrderItem("Банан", 50.0, 1),
+      MutableOrderItem("Кокос", 15.0, 1)
     )
   )
   println("\nЗапускаем ДВЕ параллельные задачи для обработки ОДНОГО И ТОГО ЖЕ заказа...")
