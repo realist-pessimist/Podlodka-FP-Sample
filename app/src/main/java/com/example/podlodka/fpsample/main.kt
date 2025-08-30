@@ -16,7 +16,7 @@ suspend fun main() {
   //endregion
   //region Принцип чистых функций
   //endregion
-  //region Явной обработки ошибок
+  //region Принцип явной обработки ошибок
   //implicitErrorHandlingExample()
   //explicitErrorHandlingExample()
   //endregion
