@@ -8,6 +8,8 @@ import com.example.podlodka.fpsample.immutablestate.immutable.immutableConcurren
 import com.example.podlodka.fpsample.immutablestate.immutable.immutableExample
 import com.example.podlodka.fpsample.immutablestate.mutable.mutableConcurrencyExample
 import com.example.podlodka.fpsample.immutablestate.mutable.mutableExample
+import com.example.podlodka.fpsample.purefunction.dirty.dirtyExample
+import com.example.podlodka.fpsample.purefunction.pure.pureExample
 
 suspend fun main() {
   //region Принцип иммутабельности
@@ -17,6 +19,8 @@ suspend fun main() {
   //immutableConcurrencyExample()
   //endregion
   //region Принцип чистых функций
+  dirtyExample()
+  //pureExample()
   //endregion
   //region Принцип явной обработки ошибок
   //implicitErrorHandlingExample()
