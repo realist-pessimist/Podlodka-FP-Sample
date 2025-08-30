@@ -1,4 +1,4 @@
-package com.example.podlodka.fpsample.errorhandling.trycatch
+package com.example.podlodka.fpsample.errorhandling.result
 
 fun explicitErrorHandlingExample() {
   val inputs = listOf("user_id:123", "user_id:abc", "user_id:-5", "неверный_формат")

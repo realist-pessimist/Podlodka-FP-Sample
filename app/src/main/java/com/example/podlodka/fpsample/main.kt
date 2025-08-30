@@ -1,6 +1,6 @@
 package com.example.podlodka.fpsample
 
-import com.example.podlodka.fpsample.errorhandling.trycatch.explicitErrorHandlingExample
+import com.example.podlodka.fpsample.errorhandling.result.explicitErrorHandlingExample
 import com.example.podlodka.fpsample.errorhandling.trycatch.implicitErrorHandlingExample
 import com.example.podlodka.fpsample.immutablestate.immutable.immutableConcurrencyExample
 import com.example.podlodka.fpsample.immutablestate.immutable.immutableExample
