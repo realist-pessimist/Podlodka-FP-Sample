@@ -41,6 +41,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.podlodka.fpsample.cleanarchitecture.data.AvailabilityRepository
 import com.example.podlodka.fpsample.cleanarchitecture.data.BookingRepository
+import com.example.podlodka.fpsample.cleanarchitecture.data.EmailRepository
 import com.example.podlodka.fpsample.cleanarchitecture.data.InMemoryCacheDataSource
 import com.example.podlodka.fpsample.cleanarchitecture.data.NetworkDataSourceImpl
 import com.example.podlodka.fpsample.cleanarchitecture.data.PaymentGateway
@@ -68,12 +69,16 @@ fun BookingFeature() {
     BookingRepository(networkDataSource)
   }
 
+  val emailRepo = remember {
+    EmailRepository(networkDataSource)
+  }
+
   val paymentGateway = remember {
     PaymentGateway()
   }
 
   val bookHotelUseCase = remember {
-    BookHotelUseCase(availabilityRepo, pricingRepo, bookingRepo, paymentGateway)
+    BookHotelUseCase(availabilityRepo, pricingRepo, bookingRepo, paymentGateway, emailRepo)
   }
 
   val stateMachine = remember { BookingFSM(bookHotelUseCase) }

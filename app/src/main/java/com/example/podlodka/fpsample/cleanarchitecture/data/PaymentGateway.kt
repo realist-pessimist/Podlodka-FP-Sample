@@ -15,4 +15,9 @@ class PaymentGateway {
     delay(100)
     ensure(price.total > 0) { BookingError.PaymentFailed(bookingId) }
   }
+
+  suspend fun refundCard(bookingId: String): Either<BookingError, Unit> = either {
+    delay(100)
+    // here we can have some logic to refund the card
+  }
 }

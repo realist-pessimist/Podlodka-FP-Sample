@@ -12,6 +12,7 @@ interface NetworkDataSource {
   suspend fun fetchPrice(data: BookingData): Either<BookingError, PriceDetails>
   suspend fun createRemoteBooking(data: BookingData): Either<BookingError, String>
   suspend fun cancelRemoteBooking(id: String): Either<BookingError, Unit>
+  suspend fun sendConfirmationEmail(bookingId: String): Either<BookingError, Unit>
 }
 
 class NetworkDataSourceImpl : NetworkDataSource {
@@ -28,6 +29,10 @@ class NetworkDataSourceImpl : NetworkDataSource {
   }
 
   override suspend fun cancelRemoteBooking(id: String): Either<BookingError, Unit> {
+    return Either.Right(Unit)
+  }
+
+  override suspend fun sendConfirmationEmail(bookingId: String): Either<BookingError, Unit> {
     return Either.Right(Unit)
   }
 }
