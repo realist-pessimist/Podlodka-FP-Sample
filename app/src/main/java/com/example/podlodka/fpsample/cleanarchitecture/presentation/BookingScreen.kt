@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -41,12 +42,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.podlodka.fpsample.cleanarchitecture.data.AvailabilityRepository
 import com.example.podlodka.fpsample.cleanarchitecture.data.BookingRepository
+import com.example.podlodka.fpsample.cleanarchitecture.data.DemandService
 import com.example.podlodka.fpsample.cleanarchitecture.data.EmailRepository
 import com.example.podlodka.fpsample.cleanarchitecture.data.InMemoryCacheDataSource
 import com.example.podlodka.fpsample.cleanarchitecture.data.NetworkDataSourceImpl
 import com.example.podlodka.fpsample.cleanarchitecture.data.PaymentGateway
 import com.example.podlodka.fpsample.cleanarchitecture.data.PricingRepository
 import com.example.podlodka.fpsample.cleanarchitecture.domain.model.BookingData
+import com.example.podlodka.fpsample.cleanarchitecture.domain.model.PriceDetails
 import com.example.podlodka.fpsample.cleanarchitecture.domain.usecase.BookHotelUseCase
 import com.example.podlodka.fpsample.cleanarchitecture.presentation.fsm.BookingEvent
 import com.example.podlodka.fpsample.cleanarchitecture.presentation.fsm.BookingFSM
@@ -62,8 +65,11 @@ fun BookingFeature() {
   val availabilityRepo = remember {
     AvailabilityRepository(networkDataSource, cacheDataSource)
   }
+
+  val demandService = remember { DemandService() }
+
   val pricingRepo = remember {
-    PricingRepository(networkDataSource, cacheDataSource)
+    PricingRepository(networkDataSource, cacheDataSource, demandService)
   }
   val bookingRepo = remember {
     BookingRepository(networkDataSource)
@@ -105,7 +111,8 @@ fun BookingScreen(viewModel: BookingViewModel) {
     is BookingState.Processing -> LoadingScreen()
 
     is BookingState.Success -> SuccessScreen(
-      bookingId = currentState.bookingId,
+      bookingId = currentState.booking.id,
+      totalPrice = currentState.booking.price,
       onReset = { viewModel.processEvent(BookingEvent.Reset) }
     )
 
@@ -116,6 +123,7 @@ fun BookingScreen(viewModel: BookingViewModel) {
     )
   }
 }
+val allServices = listOf("spa", "breakfast", "parking")
 
 @Composable
 fun BookingForm(
@@ -131,6 +139,9 @@ fun BookingForm(
   var guests by remember { mutableIntStateOf(initialData?.guests ?: 1) }
   var roomType by remember { mutableStateOf(initialData?.roomType ?: "Standard") }
   var isRoomTypeMenuExpanded by remember { mutableStateOf(false) }
+
+  var selectedServices by remember { mutableStateOf(initialData?.services?.toSet() ?: emptySet()) }
+  var isServicesMenuExpanded by remember { mutableStateOf(false) }
 
   Column(
     modifier = Modifier
@@ -205,11 +216,67 @@ fun BookingForm(
       }
     }
 
+    // Поле доп. услуг
+    Spacer(modifier = Modifier.height(16.dp))
+    Text("Дополнительные услуги", style = MaterialTheme.typography.headlineSmall)
+    Box {
+      OutlinedButton(
+        onClick = { isServicesMenuExpanded = true },
+        modifier = Modifier.fillMaxWidth(0.8f)
+      ) {
+        val buttonText = if (selectedServices.isEmpty()) {
+          "Выберите услуги"
+        } else {
+          selectedServices.joinToString()
+        }
+        Text(buttonText)
+        Icon(
+          if (isServicesMenuExpanded) Icons.Filled.KeyboardArrowUp
+          else Icons.Filled.ArrowDropDown,
+          contentDescription = null
+        )
+      }
+
+      DropdownMenu(
+        expanded = isServicesMenuExpanded,
+        onDismissRequest = { isServicesMenuExpanded = false },
+        modifier = Modifier.fillMaxWidth(0.8f)
+      ) {
+        allServices.forEach { service ->
+          DropdownMenuItem(
+            text = {
+              Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(
+                  checked = service in selectedServices,
+                  onCheckedChange = {
+                    selectedServices = if (it) {
+                      selectedServices + service
+                    } else {
+                      selectedServices - service
+                    }
+                  }
+                )
+                Text(text = service)
+              }
+            },
+            onClick = {
+              selectedServices = if (service in selectedServices) {
+                selectedServices - service
+              } else {
+                selectedServices + service
+              }
+            }
+          )
+        }
+      }
+    }
+
+
     // Кнопка бронирования
     Spacer(modifier = Modifier.height(24.dp))
     Button(
       onClick = {
-        onSetData(BookingData(dates, guests, roomType))
+        onSetData(BookingData(dates, guests, roomType, selectedServices.toList()))
         onStart()
       },
       modifier = Modifier.fillMaxWidth(0.8f),
@@ -239,6 +306,7 @@ fun LoadingScreen() {
 @Composable
 fun SuccessScreen(
   bookingId: String,
+  totalPrice: PriceDetails,
   onReset: () -> Unit
 ) {
   Box(
@@ -266,6 +334,11 @@ fun SuccessScreen(
       Spacer(modifier = Modifier.height(16.dp))
       Text(
         "Номер брони: $bookingId",
+        style = MaterialTheme.typography.bodyLarge
+      )
+      Spacer(modifier = Modifier.height(32.dp))
+      Text(
+        "Итог к оплате: ${totalPrice.total}",
         style = MaterialTheme.typography.bodyLarge
       )
       Spacer(modifier = Modifier.height(32.dp))

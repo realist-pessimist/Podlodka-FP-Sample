@@ -4,7 +4,6 @@ import arrow.core.Either
 import arrow.core.flatMap
 import arrow.core.handleErrorWith
 import arrow.core.raise.either
-import arrow.core.raise.mapError
 import arrow.core.raise.ensure
 import arrow.fx.coroutines.parZip
 import com.example.podlodka.fpsample.cleanarchitecture.data.AvailabilityRepository
@@ -17,6 +16,11 @@ import com.example.podlodka.fpsample.cleanarchitecture.domain.model.BookingData
 import com.example.podlodka.fpsample.cleanarchitecture.domain.model.BookingError
 import com.example.podlodka.fpsample.cleanarchitecture.domain.model.PriceDetails
 
+data class BookingResult(
+  val id: String,
+  val price: PriceDetails,
+)
+
 class BookHotelUseCase(
   private val availabilityRepo: AvailabilityRepository,
   private val pricingRepo: PricingRepository,
@@ -24,7 +28,7 @@ class BookHotelUseCase(
   private val paymentGateway: PaymentGateway,
   private val emailRepo: EmailRepository,
 ) {
-  suspend operator fun invoke(data: BookingData): Either<BookingError, String> = either {
+  suspend operator fun invoke(data: BookingData): Either<BookingError, BookingResult> = either {
     parZip(
       { availabilityRepo.checkRooms(data.dates).bind() },
       { pricingRepo.calculatePrice(data).bind() }
@@ -37,7 +41,7 @@ class BookHotelUseCase(
   private suspend fun performTransactionalSteps(
     data: BookingData,
     price: PriceDetails
-  ): Either<BookingError, String> {
+  ): Either<BookingError, BookingResult> {
     return bookingRepo.createBooking(data).flatMap { bookingId ->
       val context = BookingContext.create().addCompensation {
         bookingRepo.cancelBooking(bookingId)
@@ -49,7 +53,7 @@ class BookHotelUseCase(
           }
           emailRepo.sendConfirmationEmail(bookingId)
         }
-        .map { bookingId }
+        .map { BookingResult(bookingId, price) }
         .handleErrorWith { error ->
           either {
             context.rollback().bind()
