@@ -1,5 +1,6 @@
 package com.example.podlodka.fpsample.purefunction.pure
 
+import androidx.annotation.VisibleForTesting
 import com.example.podlodka.fpsample.purefunction.GlobalLogger
 import com.example.podlodka.fpsample.purefunction.UserRequest
 
@@ -16,7 +17,8 @@ fun pureExample() {
   }
 }
 
-private fun processRequestPure(request: UserRequest): ProcessResult {
+@VisibleForTesting
+fun processRequestPure(request: UserRequest): ProcessResult {
   val initialLog = "Начало валидации для ${request.email}"
 
   val emailResult = validateEmail(request.email)
@@ -36,9 +38,10 @@ private fun processRequestPure(request: UserRequest): ProcessResult {
   return ProcessResult(success = true, logs = finalLogs)
 }
 
-private data class ProcessResult(val success: Boolean, val logs: List<String>)
+data class ProcessResult(val success: Boolean, val logs: List<String>)
 
-private fun validateEmail(email: String): ProcessResult {
+@VisibleForTesting
+fun validateEmail(email: String): ProcessResult {
   return if (email.contains("@")) {
     ProcessResult(success = true, logs = listOf("Проверка email: OK"))
   } else {
@@ -46,7 +49,8 @@ private fun validateEmail(email: String): ProcessResult {
   }
 }
 
-private fun validatePassword(pass: String): ProcessResult {
+@VisibleForTesting
+fun validatePassword(pass: String): ProcessResult {
   return if (pass.length >= 8) {
     ProcessResult(success = true, logs = listOf("Проверка пароля: OK"))
   } else {
