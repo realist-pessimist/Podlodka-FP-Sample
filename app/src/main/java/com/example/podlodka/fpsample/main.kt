@@ -14,7 +14,7 @@ import com.example.podlodka.fpsample.purefunction.pure.pureExample
 suspend fun main() {
   //region Принцип иммутабельности
   //mutableExample()
-  mutableConcurrencyExample()
+  //mutableConcurrencyExample()
   //immutableExample()
   //immutableConcurrencyExample()
   //endregion
