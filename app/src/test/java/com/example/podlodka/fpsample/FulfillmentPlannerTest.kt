@@ -1,7 +1,7 @@
 package com.example.podlodka.fpsample
 
 import com.example.podlodka.fpsample.testing.FulfillmentResult
-import com.example.podlodka.fpsample.testing.Order
+import com.example.podlodka.fpsample.testing.OrderPure
 import com.example.podlodka.fpsample.testing.OrderItem
 import com.example.podlodka.fpsample.testing.Warehouse
 import com.example.podlodka.fpsample.testing.WarehouseStatus
@@ -13,7 +13,7 @@ import io.kotest.matchers.types.shouldBeInstanceOf
 class FulfillmentPlannerTest : DescribeSpec({
 
   // --- Тестовые данные ---
-  val order = Order(
+  val order = OrderPure(
     "ORD-101",
     listOf(OrderItem("p1", 10), OrderItem("p2", 5)), "EU"
   )
@@ -49,7 +49,7 @@ class FulfillmentPlannerTest : DescribeSpec({
     }
 
     it("должен вернуть Failure, если ни на одном складе не хватает товаров") {
-      val smallOrder = Order("ORD-102", listOf(OrderItem("p1", 200)), "EU")
+      val smallOrder = OrderPure("ORD-102", listOf(OrderItem("p1", 200)), "EU")
       val result = findOptimalFulfillmentPlan(smallOrder, warehouses)
 
       result.shouldBeInstanceOf<FulfillmentResult.Failure>()
@@ -57,7 +57,7 @@ class FulfillmentPlannerTest : DescribeSpec({
     }
 
     it("должен вернуть Failure, если все подходящие склады в оффлайне") {
-      val offlineOrder = Order("ORD-103", listOf(OrderItem("p1", 1)), "EU")
+      val offlineOrder = OrderPure("ORD-103", listOf(OrderItem("p1", 1)), "EU")
       val offlineWarehouses = listOf(
         Warehouse("W-PL", WarehouseStatus.OFFLINE,
           mapOf("p1" to 100), mapOf("EU" to 10.0))
@@ -68,7 +68,7 @@ class FulfillmentPlannerTest : DescribeSpec({
     }
 
     it("должен вернуть Failure, если ни один склад не доставляет в регион") {
-      val usOrder = Order("ORD-104", listOf(OrderItem("p1", 1)), "US")
+      val usOrder = OrderPure("ORD-104", listOf(OrderItem("p1", 1)), "US")
       val euWarehouses = listOf(
         Warehouse("W-DE", WarehouseStatus.ONLINE,
           mapOf("p1" to 100), mapOf("EU" to 20.0))

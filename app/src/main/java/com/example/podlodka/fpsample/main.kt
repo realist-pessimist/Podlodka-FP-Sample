@@ -19,7 +19,7 @@ suspend fun main() {
   //immutableConcurrencyExample()
   //endregion
   //region Принцип чистых функций
-  dirtyExample()
+  //dirtyExample()
   //pureExample()
   //endregion
   //region Принцип явной обработки ошибок

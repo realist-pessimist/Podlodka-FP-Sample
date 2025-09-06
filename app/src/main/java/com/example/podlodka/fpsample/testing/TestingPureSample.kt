@@ -6,7 +6,7 @@ package com.example.podlodka.fpsample.testing
 data class OrderItem(val productId: String, val quantity: Int)
 
 // Входящий заказ
-data class Order(
+data class OrderPure(
   val orderId: String,
   val items: List<OrderItem>,
   val shippingRegion: String
@@ -23,7 +23,7 @@ data class Warehouse(
 )
 
 // Успешный результат - готовый план выполнения
-data class FulfillmentPlan(
+data class FulfillmentPlanPure(
   val orderId: String,
   val sourceWarehouseId: String,
   val totalShippingCost: Double
@@ -31,7 +31,7 @@ data class FulfillmentPlan(
 
 // Итоговый результат работы функции
 sealed class FulfillmentResult {
-  data class Success(val plan: FulfillmentPlan) : FulfillmentResult()
+  data class Success(val plan: FulfillmentPlanPure) : FulfillmentResult()
   data class Failure(val reason: String) : FulfillmentResult()
 }
 
@@ -44,7 +44,7 @@ sealed class FulfillmentResult {
  * @return `FulfillmentResult` с планом или причиной сбоя.
  */
 fun findOptimalFulfillmentPlan(
-  order: Order,
+  order: OrderPure,
   warehouses: List<Warehouse>
 ): FulfillmentResult {
 
@@ -72,7 +72,7 @@ fun findOptimalFulfillmentPlan(
   // `let` позволяет элегантно обработать non-null значение без if-проверки.
   return bestWarehouse?.let { warehouse ->
     val cost = warehouse.shippingCosts.getValue(order.shippingRegion)
-    val plan = FulfillmentPlan(order.orderId, warehouse.warehouseId, cost)
+    val plan = FulfillmentPlanPure(order.orderId, warehouse.warehouseId, cost)
     FulfillmentResult.Success(plan)
   } ?: FulfillmentResult.Failure("Ни один склад не может полностью выполнить заказ.")
 }
