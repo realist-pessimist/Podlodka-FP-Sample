@@ -2,8 +2,6 @@
 agp = "8.7.1"
 kotlin = "2.0.0"
 coreKtx = "1.13.1"
-junit = "4.13.2"
-junitVersion = "1.2.1"
 lifecycleRuntimeKtx = "2.8.6"
 activityCompose = "1.9.3"
 composeBom = "2024.12.01"
@@ -12,15 +10,11 @@ ksp = "2.0.0-1.0.22"
 kotest = "5.6.2"
 mockk = "1.13.8"
 testCoroutines = "1.7.3"
-jetbrainsKotlinJvm = "2.0.0"
-appcompat = "1.7.0"
-material = "1.12.0"
 viewmodel = "2.9.0"
+benchmark = "0.4.9"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
@@ -28,21 +22,19 @@ androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
-androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "viewmodel" }
 arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
 arrow-functions = { module = "io.arrow-kt:arrow-functions", version.ref = "arrow" }
 arrow-fx-coroutines = { module = "io.arrow-kt:arrow-fx-coroutines", version.ref = "arrow" }
 arrow-optics-kt = { module = "io.arrow-kt:arrow-optics", version.ref = "arrow" }
-arrow-optics-compose = { module = "io.arrow-kt:arrow-optics-compose", version.ref = "arrow" }
 arrow-optics-ksp = { module = "io.arrow-kt:arrow-optics-ksp-plugin", version.ref = "arrow" }
 kotest-framework = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 kotest-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 test-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "testCoroutines" }
+benchmark = { module = "org.jetbrains.kotlinx:kotlinx-benchmark-runtime", version.ref = "benchmark" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -50,4 +42,5 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
+kotlin-benchmark = { id = "org.jetbrains.kotlinx.benchmark", version.ref = "benchmark" }
 

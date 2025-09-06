@@ -3,6 +3,7 @@ plugins {
   alias(libs.plugins.kotlin.android)
   alias(libs.plugins.kotlin.compose)
   alias(libs.plugins.devtools.ksp)
+  alias(libs.plugins.kotlin.benchmark)
 }
 
 android {
@@ -53,9 +54,9 @@ dependencies {
   implementation(libs.arrow.fx.coroutines)
   implementation(libs.arrow.optics.kt)
   implementation(libs.androidx.viewmodel)
+  implementation(libs.benchmark)
   ksp(libs.arrow.optics.ksp)
   debugImplementation(libs.androidx.ui.tooling)
-  debugImplementation(libs.androidx.ui.test.manifest)
 
   testImplementation(libs.kotest.framework)
   testImplementation(libs.kotest.framework)
