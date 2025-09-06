@@ -15,12 +15,6 @@ import io.mockk.junit5.MockKExtension
 import org.junit.jupiter.api.extension.ExtendWith
 import java.time.Instant
 
-/**
- * This test class demonstrates how to test the "dirty" (impure) `FulfillmentPlannerDirty`
- * using Kotest for test structure and MockK for mocking dependencies.
- *
- * The structure is more descriptive, and the mocking syntax is more Kotlin-idiomatic.
- */
 @ExtendWith(MockKExtension::class)
 class FulfillmentPlannerDirtyTest : BehaviorSpec() {
 

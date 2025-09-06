@@ -2,10 +2,6 @@ package com.example.podlodka.fpsample.testing
 
 import java.time.Instant
 
-/**
- * These classes simulate external dependencies, like network services or database repositories.
- * In a real application, they would fetch data from the outside world.
- */
 interface WarehouseService {
     fun getAvailableItems(warehouseId: String): Map<String, Int>
 }
@@ -23,11 +19,8 @@ data class FulfillmentPlan(
 )
 
 /**
- * This is the "dirty" (impure) implementation.
+ * Находит оптимальный (самый дешевый) план выполнения заказа с одного склада.
  *
- * It depends on external services (`WarehouseService`, `OrderService`) to get its data,
- * making it non-deterministic and hard to test without mocks.
- * The core logic is hidden inside and mixed with the dependency calls.
  */
 class FulfillmentPlannerDirty(
     private val warehouseService: WarehouseService,

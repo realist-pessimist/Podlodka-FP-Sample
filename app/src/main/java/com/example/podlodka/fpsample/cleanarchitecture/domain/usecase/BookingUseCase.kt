@@ -29,6 +29,7 @@ class BookHotelUseCase(
   private val emailRepo: EmailRepository,
 ) {
   suspend operator fun invoke(data: BookingData): Either<BookingError, BookingResult> = either {
+    //Расказывать когда она нужна! Идти последовательно
     parZip(
       { availabilityRepo.checkRooms(data.dates).bind() },
       { pricingRepo.calculatePrice(data).bind() }

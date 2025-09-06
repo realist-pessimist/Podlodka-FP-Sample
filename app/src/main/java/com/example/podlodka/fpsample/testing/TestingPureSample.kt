@@ -1,11 +1,7 @@
 package com.example.podlodka.fpsample.testing
 
-// --- Модели ---
-
-// Товар в заказе
 data class OrderItem(val productId: String, val quantity: Int)
 
-// Входящий заказ
 data class OrderPure(
   val orderId: String,
   val items: List<OrderItem>,
@@ -14,22 +10,19 @@ data class OrderPure(
 
 enum class WarehouseStatus { ONLINE, OFFLINE }
 
-// Склад с его инвентарём и стоимостью доставки по регионам
 data class Warehouse(
   val warehouseId: String,
   val status: WarehouseStatus,
-  val inventory: Map<String, Int>, // productId -> quantity
-  val shippingCosts: Map<String, Double> // region -> cost
+  val inventory: Map<String, Int>,
+  val shippingCosts: Map<String, Double>
 )
 
-// Успешный результат - готовый план выполнения
 data class FulfillmentPlanPure(
   val orderId: String,
   val sourceWarehouseId: String,
   val totalShippingCost: Double
 )
 
-// Итоговый результат работы функции
 sealed class FulfillmentResult {
   data class Success(val plan: FulfillmentPlanPure) : FulfillmentResult()
   data class Failure(val reason: String) : FulfillmentResult()
@@ -47,29 +40,16 @@ fun findOptimalFulfillmentPlan(
   order: OrderPure,
   warehouses: List<Warehouse>
 ): FulfillmentResult {
-
-  // Вся логика - это одна цепочка вызовов.
   val bestWarehouse = warehouses
-    // 1. Отбрасываем неактивные склады
     .filter { it.status == WarehouseStatus.ONLINE }
-
-    // 2. Отбрасываем те, что не доставляют в нужный регион
     .filter { it.shippingCosts.containsKey(order.shippingRegion) }
-
-    // 3. Отбрасываем те, где не хватает товара.
-    // `all` - идеальная функция для проверки "все ли элементы коллекции удовлетворяют условию".
     .filter { warehouse ->
       order.items.all { item ->
         warehouse.inventory.getOrDefault(item.productId, 0) >= item.quantity
       }
     }
-
-    // 4. Из оставшихся кандидатов находим тот, где доставка минимальна.
-    // `minByOrNull` возвращает элемент с минимальным значением или null, если коллекция пуста.
     .minByOrNull { it.shippingCosts.getValue(order.shippingRegion) }
 
-  // 5. Преобразуем найденный склад (или его отсутствие) в итоговый результат.
-  // `let` позволяет элегантно обработать non-null значение без if-проверки.
   return bestWarehouse?.let { warehouse ->
     val cost = warehouse.shippingCosts.getValue(order.shippingRegion)
     val plan = FulfillmentPlanPure(order.orderId, warehouse.warehouseId, cost)

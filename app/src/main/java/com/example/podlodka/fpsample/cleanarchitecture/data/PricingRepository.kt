@@ -25,9 +25,9 @@ class PricingRepository(
       .handleErrorWith {
         either {
           parZip(
-            fa = { withTimeoutOrError("price fetch") { network.fetchPrice(data) }.bind() },
-            fb = { demandService.getDemandCoefficient(data.roomType).bind() },
-            fc = {
+            { withTimeoutOrError("price fetch") { network.fetchPrice(data) }.bind() },
+            { demandService.getDemandCoefficient(data.roomType).bind() },
+            {
               data.services
                 .parMap { service -> network.fetchServicePrice(service).bind() }
             }

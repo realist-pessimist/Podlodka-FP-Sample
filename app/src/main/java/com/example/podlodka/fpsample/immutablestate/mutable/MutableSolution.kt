@@ -27,7 +27,7 @@ class MutableOrder(
   override fun toString(): String {
     return """
             Order(
-                items = ${items.joinToString { it.productName + ":x" + it.quantity }},
+                items = ${items.joinToString { it.productName + ": x" + it.quantity }},
                 subTotal = $subTotal,
                 discount = $discountAmount,
                 shipping = $shippingCost,
