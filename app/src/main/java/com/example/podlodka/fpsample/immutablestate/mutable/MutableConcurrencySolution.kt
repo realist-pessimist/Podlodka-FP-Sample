@@ -1,12 +1,13 @@
 package com.example.podlodka.fpsample.immutablestate.mutable
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 
 private object InventoryConcurrencyService {
-  private val stock = mapOf("Яблоко" to 10, "Банан" to 0, "Кокос" to 5)
+  private val stock = mapOf("Яблоко" to 10, "Банан" to 2, "Кокос" to 5)
 
   suspend fun validateStock(order: MutableOrder) {
     println("--- Проверка наличия ---")
@@ -58,7 +59,7 @@ suspend fun mutableConcurrencyExample() = coroutineScope {
     )
   )
   println("\nЗапускаем ДВЕ параллельные задачи для обработки ОДНОГО И ТОГО ЖЕ заказа...")
-  val job1 = launch {
+  val job1 = launch(Dispatchers.IO) {
     println("--> [VIP] Начинаем обработку...")
     sharedOrder.customer = Customer.VIP
     InventoryConcurrencyService.validateStock(sharedOrder)
@@ -67,7 +68,7 @@ suspend fun mutableConcurrencyExample() = coroutineScope {
     println("--> [VIP] Готово. Результат: $sharedOrder")
   }
 
-  val job2 = launch {
+  val job2 = launch(Dispatchers.Default) {
     println("--> [BASIC] Начинаем обработку...")
     sharedOrder.customer = Customer.BASIC
     InventoryConcurrencyService.validateStock(sharedOrder)

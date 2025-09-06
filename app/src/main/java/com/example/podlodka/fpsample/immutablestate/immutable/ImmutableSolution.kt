@@ -68,13 +68,12 @@ object OrderProcessor {
 }
 
 fun immutableExample() {
-  // 1. Создаем первоначальное, неизменяемое состояние
   val initialOrderState = OrderState(
     customer = Customer.VIP,
     items = listOf(
-      OrderItem("Яблоко", 20.0, 2), // 40
-      OrderItem("Кокос", 50.0, 1), // 50
-      OrderItem("Банан", 15.0, 1)  // 15
+      OrderItem("Яблоко", 20.0, 2),
+      OrderItem("Кокос", 50.0, 1),
+      OrderItem("Банан", 15.0, 1)
     ),
     promoCode = "SALE10"
   )

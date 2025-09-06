@@ -1,6 +1,7 @@
 package com.example.podlodka.fpsample.immutablestate.immutable
 
 import com.example.podlodka.fpsample.immutablestate.mutable.Customer
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.joinAll
@@ -16,13 +17,13 @@ suspend fun immutableConcurrencyExample() = coroutineScope {
     ),
   )
   println("\nЗапускаем ДВЕ параллельные задачи. Каждая работает со своей КОПИЕЙ данных.")
-  val job1 = launch {
+  val job1 = launch(Dispatchers.IO) {
     println("--> [VIP] Начинаем обработку...")
     val vipState = initialOrderState.copy(customer = Customer.VIP)
     val finalVipState = processingPipeline(vipState)
     println("--> [VIP] Готово. Результат: $finalVipState")
   }
-  val job2 = launch {
+  val job2 = launch(Dispatchers.Default) {
     println("--> [BASIC] Начинаем обработку...")
     val basicState = initialOrderState.copy(customer = Customer.BASIC)
     val finalBasicState = processingPipeline(basicState)
