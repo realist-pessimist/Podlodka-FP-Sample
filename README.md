@@ -69,4 +69,4 @@
 **Что демонстрируется:**
 - Разница в потреблении памяти скорости между стандартными мутабельными и имутабельными коллекциями.
 
-[1]: https://github.com/realist-pessimist/FRP-SilentMoon/blob/main/assets/457660291-2397c526-4b40-406c-9f6b-ed81dc72c005.png
+[1]: https://github.com/realist-pessimist/Podlodka-FP-Sample/blob/main/app/src/main/assets/%D0%A2%D0%97.webp
