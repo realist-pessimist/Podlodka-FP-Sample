@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.example.podlodka.fpsample.cleanarchitecture.presentation.BookingFeature
-import com.example.podlodka.fpsample.memorymeasure.MemoryTestScreen
 import com.example.podlodka.fpsample.theme.FPSampleTheme
 
 class MainActivity : ComponentActivity() {
@@ -15,7 +14,7 @@ class MainActivity : ComponentActivity() {
     enableEdgeToEdge()
     setContent {
       FPSampleTheme {
-        MemoryTestScreen()
+        BookingFeature()
       }
     }
   }
