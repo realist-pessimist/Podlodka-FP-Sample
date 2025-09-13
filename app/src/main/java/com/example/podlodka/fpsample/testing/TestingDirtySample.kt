@@ -1,22 +1,9 @@
 package com.example.podlodka.fpsample.testing
 
-import java.time.Instant
-
-interface WarehouseService {
-    fun getAvailableItems(warehouseId: String): Map<String, Int>
-}
-
-interface OrderService {
-    fun getPendingOrders(): List<Order>
-}
-
-data class Order(
-  val items: Map<String, Int>, val created: Instant
-)
-data class FulfillmentPlan(
-  val fulfilled: List<Order>,
-  val pending: List<Order>
-)
+import com.example.podlodka.fpsample.testing.model.FulfillmentPlan
+import com.example.podlodka.fpsample.testing.model.Order
+import com.example.podlodka.fpsample.testing.service.OrderService
+import com.example.podlodka.fpsample.testing.service.WarehouseService
 
 /**
  * Находит оптимальный (самый дешевый) план выполнения заказа с одного склада.
@@ -30,7 +17,7 @@ class FulfillmentPlannerDirty(
 
     fun createFulfillmentPlan(): FulfillmentPlan {
         val availableItems = warehouseService.getAvailableItems(warehouseId)
-        val allOrders = orderService.getPendingOrders()
+        val allOrders: List<Order> = orderService.getPendingOrders()
 
         val sortedOrders = allOrders.sortedBy { it.created }
 

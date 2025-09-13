@@ -1,9 +1,9 @@
 package com.example.podlodka.fpsample
 
 import com.example.podlodka.fpsample.testing.FulfillmentPlannerDirty
-import com.example.podlodka.fpsample.testing.Order
-import com.example.podlodka.fpsample.testing.OrderService
-import com.example.podlodka.fpsample.testing.WarehouseService
+import com.example.podlodka.fpsample.testing.model.Order
+import com.example.podlodka.fpsample.testing.service.OrderService
+import com.example.podlodka.fpsample.testing.service.WarehouseService
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.MockKAnnotations

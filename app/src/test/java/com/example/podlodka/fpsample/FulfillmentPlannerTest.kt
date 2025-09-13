@@ -1,6 +1,6 @@
 package com.example.podlodka.fpsample
 
-import com.example.podlodka.fpsample.testing.FulfillmentResult
+import com.example.podlodka.fpsample.testing.model.FulfillmentResult
 import com.example.podlodka.fpsample.testing.OrderPure
 import com.example.podlodka.fpsample.testing.OrderItem
 import com.example.podlodka.fpsample.testing.Warehouse

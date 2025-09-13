@@ -1,5 +1,7 @@
 package com.example.podlodka.fpsample.testing
 
+import com.example.podlodka.fpsample.testing.model.FulfillmentResult
+
 data class OrderItem(val productId: String, val quantity: Int)
 
 data class OrderPure(
@@ -22,11 +24,6 @@ data class FulfillmentPlanPure(
   val sourceWarehouseId: String,
   val totalShippingCost: Double
 )
-
-sealed class FulfillmentResult {
-  data class Success(val plan: FulfillmentPlanPure) : FulfillmentResult()
-  data class Failure(val reason: String) : FulfillmentResult()
-}
 
 /**
  * Находит оптимальный (самый дешевый) план выполнения заказа с одного склада.
