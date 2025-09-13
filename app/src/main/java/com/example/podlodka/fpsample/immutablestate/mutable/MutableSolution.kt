@@ -14,7 +14,7 @@ enum class Customer {
 class MutableOrder(
   var customer: Customer,
   val items: MutableList<MutableOrderItem>,
-  var promoCode: String? = null,
+  val promoCode: String? = null,
   var discountAmount: Double = 0.0,
   var shippingCost: Double = 0.0
 ) {
