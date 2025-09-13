@@ -4,9 +4,8 @@ import androidx.annotation.VisibleForTesting
 import com.example.podlodka.fpsample.purefunction.GlobalLogger
 import com.example.podlodka.fpsample.purefunction.UserRequest
 
-fun pureExample() {
-  val badRequest = UserRequest("test.com", "12345678")
-  val result = processRequestPure(badRequest)
+fun pureExample(request: UserRequest) {
+  val result = processRequestPure(request)
 
   result.logs.forEach { message -> GlobalLogger.log(message) }
 

@@ -3,8 +3,7 @@ package com.example.podlodka.fpsample.purefunction.dirty
 import com.example.podlodka.fpsample.purefunction.GlobalLogger
 import com.example.podlodka.fpsample.purefunction.UserRequest
 
-fun dirtyExample(): Boolean {
-  val request = UserRequest("test.com", "12345678")
+fun dirtyExample(request: UserRequest): Boolean {
   GlobalLogger.log("Начало валидации для ${request.email}")
 
   if (!request.email.contains("@")) {
